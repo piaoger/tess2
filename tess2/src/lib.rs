@@ -2,7 +2,10 @@
 //!
 //! Your vertices are ordered clockwise when using the clipping functions.
 
-use super::*;
+extern crate tess2_sys;
+extern crate itertools;
+
+use tess2_sys::*;
 use itertools::Itertools;
 use std::mem;
 

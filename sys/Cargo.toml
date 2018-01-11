@@ -1,0 +1,14 @@
+[package]
+name = "tess2-sys"
+version = "0.2.0"
+authors = ["Payton Turnage <paytonturnage@gmail.com>"]
+description = "libtess2 bindings."
+repository = "https://github.com/turnage/tess2"
+documentation = "https://docs.rs/tess2-sys"
+license = "MIT"
+
+[lib]
+name = "tess2_sys"
+
+[build-dependencies]
+bindgen = "0.26.3"
