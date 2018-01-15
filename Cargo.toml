@@ -1,6 +1,6 @@
 [package]
 name = "tess2"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Payton Turnage <paytonturnage@gmail.com>"]
 description = "Safe wrapper around libtess2."
 license = "MIT"
