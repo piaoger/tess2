@@ -1,0 +1,173 @@
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\bucketalloc.o" "/c" "native/src/bucketalloc.c"
+bucketalloc.c
+native/src/bucketalloc.c(66): warning C4267: 'function': conversion from 'size_t' to 'unsigned int', possible loss of data
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\dict.o" "/c" "native/src/dict.c"
+dict.c
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\geom.o" "/c" "native/src/geom.c"
+geom.c
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\mesh.o" "/c" "native/src/mesh.c"
+mesh.c
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\priorityq.o" "/c" "native/src/priorityq.c"
+priorityq.c
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\sweep.o" "/c" "native/src/sweep.c"
+sweep.c
+native/src/sweep.c(266): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+native/src/sweep.c(431): warning C4100: 'tess': unreferenced formal parameter
+native/src/sweep.c(541): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+native/src/sweep.c(550): warning C4244: '=': conversion from 'int' to 'char', possible loss of data
+native/src/sweep.c(1126): warning C4244: '=': conversion from 'double' to 'TESSreal', possible loss of data
+native/src/sweep.c(1127): warning C4244: '=': conversion from 'double' to 'TESSreal', possible loss of data
+native/src/sweep.c(1128): warning C4244: '=': conversion from 'double' to 'TESSreal', possible loss of data
+native/src/sweep.c(1129): warning C4244: '=': conversion from 'double' to 'TESSreal', possible loss of data
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CFLAGS_x86_64-pc-windows-msvc = None
+CFLAGS_x86_64_pc_windows_msvc = None
+HOST_CFLAGS = None
+CFLAGS = None
+DEBUG = Some("true")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\cl.exe" "/nologo" "/MD" "/Z7" "/I" "native/include/" "/W4" "/FoC:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\tess.o" "/c" "native/src/tess.c"
+tess.c
+native/src/tess.c(450): warning C4100: 'userData': unreferenced formal parameter
+native/src/tess.c(456): warning C4100: 'userData': unreferenced formal parameter
+native/src/tess.c(462): warning C4100: 'userData': unreferenced formal parameter
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+running: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\lib.exe" "/OUT:C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\libtess2.a" "/nologo" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\bucketalloc.o" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\dict.o" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\geom.o" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\mesh.o" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\priorityq.o" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\sweep.o" "C:\\Users\\turnage\\Documents\\GitHub\\tess2\\target\\debug\\build\\tess2-sys-b8cff7a4355f044c\\out\\native/src\\tess.o"
+exit code: 0
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+TARGET = Some("x86_64-pc-windows-msvc")
+HOST = Some("x86_64-pc-windows-msvc")
+CC_x86_64-pc-windows-msvc = None
+CC_x86_64_pc_windows_msvc = None
+HOST_CC = None
+CC = None
+cargo:rustc-link-lib=static=tess2
+cargo:rustc-link-search=native=C:\Users\turnage\Documents\GitHub\tess2\target\debug\build\tess2-sys-b8cff7a4355f044c\out
