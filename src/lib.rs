@@ -3,10 +3,8 @@
 //! Your vertices are ordered clockwise when using the clipping functions.
 
 extern crate tess2_sys;
-extern crate itertools;
 
 use tess2_sys::*;
-use itertools::Itertools;
 use std::mem;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -82,8 +80,8 @@ impl Tessellator {
             let triangle_buffer = slice::from_raw_parts(tessGetElements(self.tess),
                                                         triangle_count * 3);
 
-            let xs = vertex_buffer.iter().step(2);
-            let ys = vertex_buffer.iter().skip(1).step(2);
+            let xs = vertex_buffer.iter().step_by(2);
+            let ys = vertex_buffer.iter().skip(1).step_by(2);
             let verts = xs.zip(ys);
 
             Ok(Triangles {
