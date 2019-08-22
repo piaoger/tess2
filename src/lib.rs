@@ -1,8 +1,3 @@
-//! Safe rust wrapper around the subset of libtess2 I personally need.
-//!
-//! Your vertices are ordered clockwise when using the clipping functions.
-
-extern crate tess2_sys;
 
 use tess2_sys::*;
 use std::mem;
