@@ -17,6 +17,7 @@ pub struct Tessellator {
 }
 
 impl Tessellator {
+
     pub fn new() -> Self {
         unsafe {
             Tessellator {
@@ -25,12 +26,20 @@ impl Tessellator {
         }
     }
 
-    // TODO:
+    fn set_option(self, opt: TessOption, enable: bool) -> Self {
+        unsafe {
+            tessSetOption(self.tess, opt, if enable { 1 } else { 0 });
+        }
+        self
+    }
+
+
+    // TODO: generic support
     pub fn add_contour_2d(self, contour: &[math::Vector2], orientation: Orientation) -> Self {
-        type TY = math::Vector2;
+        type T = math::Vector2;
 
         // TODO: try to use .into()
-        let format = |v: &TY| vec![v.x, v.y];
+        let format = |v: &T| vec![v.x, v.y];
 
         let formatted_vertices: Vec<f32> = match orientation {
             Orientation::Clockwise => contour.iter().flat_map(format).collect(),
@@ -41,9 +50,9 @@ impl Tessellator {
             use std::os::raw::c_void;
             tessAddContour(
                 self.tess,
-                TY::dim(),
+                T::dim(),
                 (&formatted_vertices[0] as *const f32) as *const c_void,
-                mem::size_of_val(&formatted_vertices[0]) as i32 * TY::dim(),
+                mem::size_of_val(&formatted_vertices[0]) as i32 * T::dim(),
                 contour.len() as i32,
             );
         }
@@ -52,7 +61,7 @@ impl Tessellator {
     }
 
     // triangulation
-    pub fn triangulate(
+    pub fn tessellate(
         &mut self,
         rule: TessWindingRule,
         elem_type: TessElementType,
@@ -78,6 +87,7 @@ impl Tessellator {
             if raw_triangle_count < 1 {
                 return Err(String::from("Triangulation failed to yield triangles."));
             };
+
             let triangle_count = raw_triangle_count as usize;
 
             let vertex_buffer = slice::from_raw_parts(
@@ -98,50 +108,12 @@ impl Tessellator {
         }
     }
 
-    fn set_option(self, opt: TessOption, enable: bool) -> Self {
-        unsafe {
-            tessSetOption(self.tess, opt, if enable { 1 } else { 0 });
-        }
-        self
-    }
+    pub fn triangulate_2d(&mut self, rule: TessWindingRule) -> Result<geom::Mesh2d, String> {
+        let elem_type = TessElementType::TESS_POLYGONS;
+        let poly_size = 3;
+        let vert_size = 2;
 
-    pub fn tessellate(&mut self, rule: TessWindingRule) -> Result<geom::Mesh2d, String> {
-        unsafe {
-            use std::slice;
-            if tessTesselate(
-                self.tess,
-                rule,
-                TessElementType::TESS_POLYGONS,
-                3,
-                2,
-                0 as *mut TESSreal,
-            ) != 1
-            {
-                return Err(String::from("Triangulation failed."));
-            }
-
-            let raw_triangle_count = tessGetElementCount(self.tess);
-            if raw_triangle_count < 1 {
-                return Err(String::from("Triangulation failed to yield triangles."));
-            };
-            let triangle_count = raw_triangle_count as usize;
-
-            let vertex_buffer = slice::from_raw_parts(
-                tessGetVertices(self.tess),
-                tessGetVertexCount(self.tess) as usize * 2,
-            );
-            let triangle_buffer =
-                slice::from_raw_parts(tessGetElements(self.tess), triangle_count * 3);
-
-            let xs = vertex_buffer.iter().step_by(2);
-            let ys = vertex_buffer.iter().skip(1).step_by(2);
-            let verts = xs.zip(ys);
-
-            Ok(geom::Mesh2d {
-                vertices: verts.map(|(x, y)| math::Vector2 { x: *x, y: *y }).collect(),
-                indices: triangle_buffer.iter().map(|i| *i as u32).collect(),
-            })
-        }
+        self.tessellate(rule, elem_type, poly_size, vert_size)
     }
 }
 
