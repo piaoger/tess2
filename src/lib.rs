@@ -90,17 +90,17 @@ impl Tessellator {
                 return Err(String::from("Triangulation failed to yield triangles."));
             };
 
-            let triangle_count = raw_triangle_count as usize;
-
+            let triangle_count = raw_triangle_count;
+            let stride = vert_size as usize;
             let vertex_buffer = slice::from_raw_parts(
                 tessGetVertices(self.tess),
-                tessGetVertexCount(self.tess) as usize * vert_size,
+                tessGetVertexCount(self.tess) as usize * stride,
             );
             let triangle_buffer =
-                slice::from_raw_parts(tessGetElements(self.tess), triangle_count * poly_size);
+                slice::from_raw_parts(tessGetElements(self.tess), (triangle_count * poly_size) as usize);
 
-            let xs = vertex_buffer.iter().step_by(vert_size);
-            let ys = vertex_buffer.iter().skip(1).step_by(vert_size);
+            let xs = vertex_buffer.iter().step_by(stride);
+            let ys = vertex_buffer.iter().skip(1).step_by(stride);
             let verts = xs.zip(ys);
 
             // support Mesh3d or Mesh2d in the future
