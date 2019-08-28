@@ -94,15 +94,16 @@ impl Tessellator {
 
             let vertex_buffer = slice::from_raw_parts(
                 tessGetVertices(self.tess),
-                tessGetVertexCount(self.tess) as usize * 2,
+                tessGetVertexCount(self.tess) as usize * vert_size,
             );
             let triangle_buffer =
-                slice::from_raw_parts(tessGetElements(self.tess), triangle_count * 3);
+                slice::from_raw_parts(tessGetElements(self.tess), triangle_count * poly_size);
 
-            let xs = vertex_buffer.iter().step_by(2);
-            let ys = vertex_buffer.iter().skip(1).step_by(2);
+            let xs = vertex_buffer.iter().step_by(vert_size);
+            let ys = vertex_buffer.iter().skip(1).step_by(vert_size);
             let verts = xs.zip(ys);
 
+            // support Mesh3d or Mesh2d in the future
             Ok(geom::Mesh2d {
                 vertices: verts.map(|(x, y)| math::Vector2 { x: *x, y: *y }).collect(),
                 indices: triangle_buffer.iter().map(|i| *i as u32).collect(),
