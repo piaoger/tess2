@@ -6,6 +6,8 @@ pub mod math;
 pub mod ops;
 
 pub use tess2_sys::TessWindingRule as WindingRule;
+pub use tess2_sys::TessElementType as ElementType;
+pub use tess2_sys::TessOption as OptionType;
 
 pub enum Orientation {
     Clockwise,
@@ -63,7 +65,7 @@ impl Tessellator {
     // triangulation
     pub fn tessellate(
         &mut self,
-        rule: TessWindingRule,
+        rule: WindingRule,
         elem_type: TessElementType,
         poly_size: u32,
         vert_size: u32,
