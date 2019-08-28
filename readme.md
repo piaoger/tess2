@@ -12,6 +12,43 @@ and self intersections which sometimes trips up lyon; check on
 the case before substituting libtess2.
 
 
+
+
+##
+
+```
+
+Size of this buffer is not tessGetElementCount ints.
+
+Size of this buffer depends on values provided when calling tessTesselate
+
+TESS_POLYGONS:
+
+[vert index 0 ... poly_size-1] * element_count   ->   poly_size * element_count
+
+TESS_CONNECTED_POLYGONS:
+
+[vert index 0 ... poly_size-1] * element_count   ->   poly_size * 2 * element_count
+
+TESS_BOUNDARY_CONTOURS:
+
+vert_base_index, vert_count] * element_count    ->    2 * element_count
+
+
+if element type is TESS_POLYGONS, then this array contains tessGetElementCount * polySize integers.
+array can be divided into tessGetElementCount slices of polySize length.
+Each slice contains indices to vertices in tessGetVertices that create this polygon.
+If polygon has less vertices than polySize, remaining indices are -1
+
+if element type is TESS_CONNECTED_POLYGONS, this array contains tessGetElementCount * polysize
+
+TESS_BOUNDARY_CONTOURS: [vert_base_index, vert_count, 0...vert_count] * element_count
+
+if element type is TESS_BOUNDARY_CONTOURS, this array contains tessGetElementCount * 2 integers
+each pair of values determines [position, length] of polygon contours stored in vertices array
+
+```
+
 ## refs
 
 - tess2.js

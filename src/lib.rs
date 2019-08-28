@@ -5,13 +5,25 @@ pub mod geom;
 pub mod math;
 pub mod ops;
 
-pub use tess2_sys::TessWindingRule as WindingRule;
 pub use tess2_sys::TessElementType as ElementType;
 pub use tess2_sys::TessOption as OptionType;
+pub use tess2_sys::TessWindingRule as WindingRule;
 
 pub enum Orientation {
     Clockwise,
     CounterClockwise,
+}
+
+#[derive(PartialEq, PartialOrd, Debug, Default)]
+pub struct TessellateResult {
+    /// generated vertex buffer
+    vertices: Vec<f32>,
+
+    /// vertx index mapped to origin one
+    vertex_indices: Vec<isize>,
+
+    /// elements: polygons, connected polygons, boundary
+    elements: Vec<isize>,
 }
 
 pub struct Tessellator {
@@ -19,7 +31,6 @@ pub struct Tessellator {
 }
 
 impl Tessellator {
-
     pub fn new() -> Self {
         unsafe {
             Tessellator {
@@ -34,7 +45,6 @@ impl Tessellator {
         }
         self
     }
-
 
     // TODO: generic support
     pub fn add_contour_2d(self, contour: &[math::Vector2], orientation: Orientation) -> Self {
@@ -62,6 +72,84 @@ impl Tessellator {
         self
     }
 
+    // TODO: generic support
+    pub fn add_contour(self, contour: &[f32], orientation: Orientation) -> Self {
+        type T = math::Vector2;
+
+        // TODO: try to use .into()
+        let format = |v: &T| vec![v.x, v.y];
+
+        unsafe {
+            use std::os::raw::c_void;
+            tessAddContour(
+                self.tess,
+                T::dim(),
+                (&contour[0] as *const f32) as *const c_void,
+                mem::size_of_val(&contour[0]) as i32 * T::dim(),
+                contour.len() as i32 / 2,
+            );
+        }
+
+        self
+    }
+
+    // triangulation
+    pub fn tessellate_(
+        &mut self,
+        rule: WindingRule,
+        elem_type: TessElementType,
+        poly_size: u32,
+        vert_size: u32,
+    ) -> Result<TessellateResult, String> {
+        unsafe {
+            use std::slice;
+
+            if tessTesselate(
+                self.tess,
+                rule,
+                elem_type,
+                poly_size as i32,
+                vert_size as i32,
+                0 as *mut TESSreal,
+            ) != 1
+            {
+                return Err(String::from("Tessellate failed."));
+            }
+
+            // element
+            let raw_element_count = tessGetElementCount(self.tess);
+            if raw_element_count < 1 {
+                return Err(String::from("Tessellate failed to yield elements."));
+            };
+
+            let element_count = raw_element_count as usize;
+            let raw_elements = tessGetElements(self.tess);
+            let elem_buf_len = match elem_type {
+                TessElementType::TESS_POLYGONS => element_count * poly_size as usize,
+                TessElementType::TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
+                TessElementType::TESS_BOUNDARY_CONTOURS => element_count * 2,
+            };
+
+            println!("elments array len{:?}", elem_buf_len);
+            let element_buffer = slice::from_raw_parts(raw_elements, elem_buf_len);
+
+            // vertex
+            let vert_count = tessGetVertexCount(self.tess) as usize;
+            let vert_stride = vert_size as usize;
+            let vertex_buffer =
+                slice::from_raw_parts(tessGetVertices(self.tess), vert_count * vert_stride);
+            let vert_indices_buffer =
+                slice::from_raw_parts(tessGetVertexIndices(self.tess), vert_count);
+
+            // support Mesh3d or Mesh2d in the future
+            Ok(TessellateResult {
+                vertices: vertex_buffer.to_vec(), //.iter().map(|i| *i).collect(),
+                vertex_indices: vert_indices_buffer.iter().map(|i| *i as isize).collect(),
+                elements: element_buffer.iter().map(|i| *i as isize).collect(),
+            })
+        }
+    }
+
     // triangulation
     pub fn tessellate(
         &mut self,
@@ -82,31 +170,37 @@ impl Tessellator {
                 0 as *mut TESSreal,
             ) != 1
             {
-                return Err(String::from("Triangulation failed."));
+                return Err(String::from("Tessellate failed."));
             }
 
-            let raw_triangle_count = tessGetElementCount(self.tess);
-            if raw_triangle_count < 1 {
-                return Err(String::from("Triangulation failed to yield triangles."));
+            let raw_element_count = tessGetElementCount(self.tess);
+            if raw_element_count < 1 {
+                return Err(String::from("Tessellate failed to yield elements."));
             };
 
-            let triangle_count = raw_triangle_count as usize;
-            let stride = vert_size as usize;
-            let vertex_buffer = slice::from_raw_parts(
-                tessGetVertices(self.tess),
-                tessGetVertexCount(self.tess) as usize * stride,
-            );
-            let triangle_buffer =
-                slice::from_raw_parts(tessGetElements(self.tess), triangle_count * poly_size as usize);
+            let vert_count = tessGetVertexCount(self.tess) as usize;
+            let vert_stride = vert_size as usize;
+            let vertex_buffer =
+                slice::from_raw_parts(tessGetVertices(self.tess), vert_count * vert_stride);
 
-            let xs = vertex_buffer.iter().step_by(stride);
-            let ys = vertex_buffer.iter().skip(1).step_by(stride);
+            let element_count = raw_element_count as usize;
+            let elem_buf_len = match elem_type {
+                TessElementType::TESS_POLYGONS => element_count * poly_size as usize,
+                TessElementType::TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
+                TessElementType::TESS_BOUNDARY_CONTOURS => element_count * poly_size as usize * 2,
+            };
+
+            let element_buffer = slice::from_raw_parts(tessGetElements(self.tess), elem_buf_len);
+
+            let xs = vertex_buffer.iter().step_by(vert_stride);
+            let ys = vertex_buffer.iter().skip(1).step_by(vert_stride);
             let verts = xs.zip(ys);
 
             // support Mesh3d or Mesh2d in the future
             Ok(geom::Mesh2d {
                 vertices: verts.map(|(x, y)| math::Vector2 { x: *x, y: *y }).collect(),
-                indices: triangle_buffer.iter().map(|i| *i as u32).collect(),
+                // vertex_indices:
+                indices: element_buffer.iter().map(|i| *i as u32).collect(),
             })
         }
     }

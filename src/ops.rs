@@ -1,10 +1,38 @@
 /// Tessellates the union of the given simple polygon paths.
-pub fn fill_union(polies: &[&[crate::math::Vector2]]) -> Result<crate::geom::Mesh2d, String> {
+pub fn fill_union(contours: &[&[crate::math::Vector2]]) -> Result<crate::geom::Mesh2d, String> {
     let mut tess = crate::Tessellator::new();
-    for poly in polies {
-        tess = tess.add_contour_2d(poly, crate::Orientation::Clockwise);
+    for contour in contours {
+        tess = tess.add_contour_2d(contour, crate::Orientation::Clockwise);
     }
     tess.triangulate_2d(crate::WindingRule::TESS_WINDING_NONZERO)
+}
+
+pub fn cleanup_contours(
+    contours: &[&[crate::math::Vector2]],
+) -> Result<crate::TessellateResult, String> {
+    let mut tess = crate::Tessellator::new();
+    for contour in contours {
+        tess = tess.add_contour_2d(contour, crate::Orientation::Clockwise);
+    }
+    tess.tessellate_(
+        crate::WindingRule::TESS_WINDING_ODD,
+        crate::ElementType::TESS_POLYGONS,
+        3,
+        2,
+    )
+}
+
+pub fn cleanup_contours_2(contours: &[&[f32]]) -> Result<crate::TessellateResult, String> {
+    let mut tess = crate::Tessellator::new();
+    for contour in contours {
+        tess = tess.add_contour(contour, crate::Orientation::Clockwise);
+    }
+    tess.tessellate_(
+        crate::WindingRule::TESS_WINDING_ODD,
+        crate::ElementType::TESS_POLYGONS,
+        3,
+        2,
+    )
 }
 
 /// Tessellates the intersection of the given simple polygon paths. To triangulate_2d

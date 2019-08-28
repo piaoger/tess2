@@ -31,6 +31,26 @@ mod test {
     }
 
     #[test]
+    fn cleanup_contours() {
+        let res = ops::cleanup_contours(&[&[
+            Vector2 { x: 0.0, y: 0.0 },
+            Vector2 { x: 0.5, y: 0.0 },
+            Vector2 { x: 1.0, y: 0.0 },
+            Vector2 { x: 1.0, y: 1.0 },
+            Vector2 { x: 0.0, y: 1.0 },
+        ]]);
+
+        println!("{:?}", res);
+    }
+
+    #[test]
+    fn cleanup_contours_2() {
+        let res = ops::cleanup_contours_2(&[&[0.0, 0.0, 0.5, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0]]);
+
+        println!("{:?}", res);
+    }
+
+    #[test]
     fn intersection() {
         assert_eq!(
             ops::fill_intersection(
