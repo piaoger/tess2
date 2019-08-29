@@ -17,13 +17,13 @@ pub enum Orientation {
 #[derive(PartialEq, PartialOrd, Debug, Default)]
 pub struct TessellateResult {
     /// generated vertex buffer
-    vertices: Vec<f32>,
+    pub vertices: Vec<f32>,
 
     /// vertx index mapped to origin one
-    vertex_indices: Vec<isize>,
+    pub vertex_indices: Vec<isize>,
 
     /// elements: polygons, connected polygons, boundary
-    elements: Vec<isize>,
+    pub elements: Vec<isize>,
 }
 
 pub struct Tessellator {
