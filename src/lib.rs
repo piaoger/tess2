@@ -24,6 +24,8 @@ pub struct TessellateResult {
 
     /// elements: polygons, connected polygons, boundary
     pub elements: Vec<isize>,
+
+    pub element_count: usize,
 }
 
 
@@ -158,6 +160,7 @@ impl Tessellator {
                 vertices: vertex_buffer.to_vec(), //.iter().map(|i| *i).collect(),
                 vertex_indices: vert_indices_buffer.iter().map(|i| *i as isize).collect(),
                 elements: element_buffer.iter().map(|i| *i as isize).collect(),
+                element_count:element_count,
             })
         }
     }
