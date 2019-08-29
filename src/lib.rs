@@ -35,6 +35,7 @@ impl Default for TessellateResult {
             vertices:vec![],
             vertex_indices:vec![],
             elements:vec![],
+            element_count: 0,
         }
     }
 }
