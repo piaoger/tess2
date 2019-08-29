@@ -14,7 +14,7 @@ pub enum Orientation {
     CounterClockwise,
 }
 
-#[derive(PartialEq, PartialOrd, Debug, Default)]
+#[derive(PartialEq, PartialOrd, Debug)]
 pub struct TessellateResult {
     /// generated vertex buffer
     pub vertices: Vec<f32>,
