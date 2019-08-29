@@ -26,6 +26,18 @@ pub struct TessellateResult {
     pub elements: Vec<isize>,
 }
 
+
+impl Default for TessellateResult {
+    fn default() -> Self {
+        TessellateResult{
+            vertices:vec![],
+            vertex_indices:vec![],
+            elements:vec![],
+        }
+    }
+}
+
+
 pub struct Tessellator {
     tess: *mut TESStesselator,
 }
