@@ -9,6 +9,8 @@ pub use tess2_sys::TessElementType as ElementType;
 pub use tess2_sys::TessOption as OptionType;
 pub use tess2_sys::TessWindingRule as WindingRule;
 
+pub type TESSreal = f32;
+
 pub enum Orientation {
     Clockwise,
     CounterClockwise,
@@ -56,7 +58,7 @@ impl Tessellator {
 
     fn set_option(self, opt: TessOption, enable: bool) -> Self {
         unsafe {
-            tessSetOption(self.tess, opt, if enable { 1 } else { 0 });
+            tessSetOption(self.tess, opt as i32, if enable { 1 } else { 0 });
         }
         self
     }
@@ -109,6 +111,7 @@ impl Tessellator {
     }
 
     // triangulation
+    // all internal allocated objects will be free before each tesselate in tess2
     pub fn tessellate_(
         &mut self,
         rule: WindingRule,
@@ -121,8 +124,8 @@ impl Tessellator {
 
             if tessTesselate(
                 self.tess,
-                rule,
-                elem_type,
+                rule as i32,
+                elem_type as i32,
                 poly_size as i32,
                 vert_size as i32,
                 0 as *mut TESSreal,
@@ -140,9 +143,10 @@ impl Tessellator {
             let element_count = raw_element_count as usize;
             let raw_elements = tessGetElements(self.tess);
             let elem_buf_len = match elem_type {
-                TessElementType::TESS_POLYGONS => element_count * poly_size as usize,
-                TessElementType::TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
-                TessElementType::TESS_BOUNDARY_CONTOURS => element_count * 2,
+                 TESS_POLYGONS => element_count * poly_size as usize,
+                 TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
+                 TESS_BOUNDARY_CONTOURS => element_count * 2,
+                 _ => return Err(String::from("Tessellate failed to yield elements.")),
             };
 
             println!("elments array len{:?}", elem_buf_len);
@@ -179,8 +183,8 @@ impl Tessellator {
 
             if tessTesselate(
                 self.tess,
-                rule,
-                elem_type,
+                rule as i32,
+                elem_type as i32,
                 poly_size as i32,
                 vert_size as i32,
                 0 as *mut TESSreal,
@@ -201,9 +205,10 @@ impl Tessellator {
 
             let element_count = raw_element_count as usize;
             let elem_buf_len = match elem_type {
-                TessElementType::TESS_POLYGONS => element_count * poly_size as usize,
-                TessElementType::TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
-                TessElementType::TESS_BOUNDARY_CONTOURS => element_count * poly_size as usize * 2,
+                 TESS_POLYGONS => element_count * poly_size as usize,
+                 TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
+               TESS_BOUNDARY_CONTOURS => element_count * poly_size as usize * 2,
+                 _ => return Err(String::from("Tessellate failed to yield elements.")),
             };
 
             let element_buffer = slice::from_raw_parts(tessGetElements(self.tess), elem_buf_len);
@@ -222,7 +227,7 @@ impl Tessellator {
     }
 
     pub fn triangulate_2d(&mut self, rule: TessWindingRule) -> Result<geom::Mesh2d, String> {
-        let elem_type = TessElementType::TESS_POLYGONS;
+        let elem_type =  TESS_POLYGONS;
         let poly_size = 3;
         let vert_size = 2;
 
