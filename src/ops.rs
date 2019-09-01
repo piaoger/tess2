@@ -16,12 +16,7 @@ pub fn cleanup_contours(
     for contour in contours {
         tess = tess.add_contour_2d(contour, crate::Orientation::Clockwise);
     }
-    tess.tessellate_(
-        TESS_WINDING_ODD,
-        TESS_POLYGONS,
-        3,
-        2,
-    )
+    tess.tessellate_(TESS_WINDING_ODD, TESS_POLYGONS, 3, 2)
 }
 
 pub fn cleanup_contours_2(contours: &[&[f32]]) -> Result<crate::TessellateResult, String> {
@@ -29,12 +24,7 @@ pub fn cleanup_contours_2(contours: &[&[f32]]) -> Result<crate::TessellateResult
     for contour in contours {
         tess = tess.add_contour(contour, crate::Orientation::Clockwise);
     }
-    tess.tessellate_(
-        TESS_WINDING_ODD,
-        TESS_POLYGONS,
-        3,
-        2,
-    )
+    tess.tessellate_(TESS_WINDING_ODD, TESS_POLYGONS, 3, 2)
 }
 
 /// Tessellates the intersection of the given simple polygon paths. To triangulate_2d

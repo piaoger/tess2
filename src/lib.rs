@@ -30,18 +30,16 @@ pub struct TessellateResult {
     pub element_count: usize,
 }
 
-
 impl Default for TessellateResult {
     fn default() -> Self {
-        TessellateResult{
-            vertices:vec![],
-            vertex_indices:vec![],
-            elements:vec![],
+        TessellateResult {
+            vertices: vec![],
+            vertex_indices: vec![],
+            elements: vec![],
             element_count: 0,
         }
     }
 }
-
 
 pub struct Tessellator {
     tess: *mut TESStesselator,
@@ -143,10 +141,10 @@ impl Tessellator {
             let element_count = raw_element_count as usize;
             let raw_elements = tessGetElements(self.tess);
             let elem_buf_len = match elem_type {
-                 TESS_POLYGONS => element_count * poly_size as usize,
-                 TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
-                 TESS_BOUNDARY_CONTOURS => element_count * 2,
-                 _ => return Err(String::from("Tessellate failed to yield elements.")),
+                TESS_POLYGONS => element_count * poly_size as usize,
+                TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
+                TESS_BOUNDARY_CONTOURS => element_count * 2,
+                _ => return Err(String::from("Tessellate failed to yield elements.")),
             };
 
             println!("elments array len{:?}", elem_buf_len);
@@ -165,7 +163,7 @@ impl Tessellator {
                 vertices: vertex_buffer.to_vec(), //.iter().map(|i| *i).collect(),
                 vertex_indices: vert_indices_buffer.iter().map(|i| *i as isize).collect(),
                 elements: element_buffer.iter().map(|i| *i as isize).collect(),
-                element_count:element_count,
+                element_count: element_count,
             })
         }
     }
@@ -205,10 +203,10 @@ impl Tessellator {
 
             let element_count = raw_element_count as usize;
             let elem_buf_len = match elem_type {
-                 TESS_POLYGONS => element_count * poly_size as usize,
-                 TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
-               TESS_BOUNDARY_CONTOURS => element_count * poly_size as usize * 2,
-                 _ => return Err(String::from("Tessellate failed to yield elements.")),
+                TESS_POLYGONS => element_count * poly_size as usize,
+                TESS_CONNECTED_POLYGONS => element_count * poly_size as usize * 2,
+                TESS_BOUNDARY_CONTOURS => element_count * poly_size as usize * 2,
+                _ => return Err(String::from("Tessellate failed to yield elements.")),
             };
 
             let element_buffer = slice::from_raw_parts(tessGetElements(self.tess), elem_buf_len);
@@ -227,7 +225,7 @@ impl Tessellator {
     }
 
     pub fn triangulate_2d(&mut self, rule: TessWindingRule) -> Result<geom::Mesh2d, String> {
-        let elem_type =  TESS_POLYGONS;
+        let elem_type = TESS_POLYGONS;
         let poly_size = 3;
         let vert_size = 2;
 
